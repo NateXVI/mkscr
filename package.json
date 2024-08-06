@@ -1,0 +1,31 @@
+{
+  "name": "mkscr",
+  "version": "0.1.0",
+  "description": "A CLI tool that generates a batch file to open AutoCAD and automatically load a specified DLL",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NateXVI/mkscr.git"
+  },
+  "keywords": [
+    "CLI",
+    "AutoCAD"
+  ],
+  "bin": {
+    "mkscr": "dist/index.cjs"
+  },
+  "scripts": {
+    "start": "bun src/index.ts",
+    "build": "tsup src/index.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "citty": "^0.1.6",
+    "tsup": "^8.2.4"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
