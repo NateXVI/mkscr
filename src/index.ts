@@ -16,7 +16,7 @@ const main = defineCommand({
     name: "mkscr",
     description:
       "A CLI tool that generates a batch file to open AutoCAD and automatically load a specified DLL",
-    version: "0.1.0",
+    version: "0.2.0",
   },
   args: {
     lib: {
