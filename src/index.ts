@@ -57,11 +57,13 @@ function createScript({ name, lib, drawing, copy = false }: CreateScriptArgs) {
   const desktop = path.join(os.homedir(), "Desktop");
   const scriptsDir = path.join(desktop, name);
 
-  const libDir = path.dirname(lib);
-  const libName = path.basename(lib);
+  const drawingPath = drawing ? path.resolve(drawing) : undefined;
+  const libPath = path.resolve(lib);
+  const libDir = path.dirname(libPath);
+  const libName = path.basename(libPath);
   const libDest = path.join(scriptsDir, "lib");
   const newLibPath = path.join(libDest, libName);
-  const loadLibPath = copy ? newLibPath : lib;
+  const loadLibPath = copy ? newLibPath : libPath;
 
   makeDirIfNotExists(copy ? libDest : scriptsDir);
 
@@ -76,7 +78,7 @@ function createScript({ name, lib, drawing, copy = false }: CreateScriptArgs) {
   }
   batchContent += startAutoCADCommand({
     script: scriptFile,
-    drawing,
+    drawing: drawingPath,
   });
   fs.writeFileSync(batchFile, batchContent);
 
