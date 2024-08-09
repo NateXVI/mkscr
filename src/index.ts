@@ -91,6 +91,20 @@ function createScript({ name, lib, drawing, copy = false }: CreateScriptArgs) {
 
   const shortcutFile = path.join(desktop, `${name}.lnk`);
   createShortcut(batchFile, shortcutFile);
+
+  const command = [
+    "npx",
+    `mkscr@${packageJson.version}`,
+    ...process.argv.slice(2),
+  ]
+    .map((arg) => {
+      if (arg === drawing) return `"${drawingPath}"`;
+      if (arg === lib) return `"${libPath}"`;
+      if (arg.includes(" ")) return `"${arg}"`;
+      return arg;
+    })
+    .join(" ");
+  fs.writeFileSync(path.join(scriptsDir, "command.txt"), command);
 }
 
 if (process.argv.length < 3) {
