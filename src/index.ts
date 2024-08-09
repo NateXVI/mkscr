@@ -10,13 +10,14 @@ import {
   startAutoCADCommand,
 } from "./utils";
 import fs from "fs";
+import packageJson from "../package.json" assert { type: "json" };
 
 const main = defineCommand({
   meta: {
     name: "mkscr",
     description:
       "A CLI tool that generates a batch file to open AutoCAD and automatically load a specified DLL",
-    version: "0.2.0",
+    version: packageJson.version,
   },
   args: {
     lib: {
