@@ -14,7 +14,7 @@ To create a script:
 npx mkscr -l lib.dll -d drawing.dwg -c my-script
 ```
 
-> Note: `lib.dll` and `drawing.dwg` should be replaced with the actual paths to your DLL and drawing files. The program doesn't check if the files exist or if they are valid, but it will resolve relative paths.
+> Note: `lib.dll` and `drawing.dwg` should be replaced with the actual paths to your DLL and drawing file. The program doesn't check if the files exist or if they are valid, but it will resolve relative paths.
 
 The `-l` flag specifies the DLL file to load on startup.
 
@@ -24,17 +24,17 @@ The `-c` flag tells it to copy everything in the DLL's folder before starting Au
 
 `my-script` is the name of the generated script.
 
-This will create the folder `~/Desktop/mkscr/my-script`. Inside that folder, you will find a file named `startup.scr`, a file named `open-acad.bat`, a folder named `lib`, and a file named `command.txt`.
+This will create the folder `~/Desktop/mkscr/my-script` with the following contents:
 
-`startup.scr` is an AutoCAD script that will load the DLL file.
+- `startup.scr`: The AutoCAD script that will load the DLL file. This runs when AutoCAD starts.
 
-`open-acad.bat` is a batch file that will start AutoCAD and load the DLL file.
+- `open-acad.bat`: Batch file that will start AutoCAD, specifying the drawing to open and the script to run.
 
-The `lib` folder is where the DLL file will be copied to before starting AutoCAD. The files are copied when you run `open-acad.bat`, if the `-c` flag is specified.
+- `lib`: The folder that will store the DLL file and its dependencies. This is only present if the `-c` flag is specified.
 
-This will also create a shortcut named `my-script.lnk` in your Desktop. This shortcut runs `open-acad.bat` without showing the terminal window.
+- `command.txt`: This stores the command that was used to create the scripts. It's not the exact same, but should have the same result.
 
-The `command.txt` file contains the command that was used to create the scripts.
+Running the command will also create a shortcut named `my-script.lnk` in your Desktop. This shortcut runs `open-acad.bat` without showing the terminal window.
 
 ## Development
 
