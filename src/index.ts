@@ -59,7 +59,7 @@ type CreateScriptArgs = {
 
 function createScript({ name, lib, drawing, copy = false }: CreateScriptArgs) {
   const desktop = path.join(os.homedir(), "Desktop");
-  const scriptsDir = path.join(desktop, name);
+  const scriptsDir = path.join(desktop, "mkscr", name);
 
   const hasLib = lib !== undefined;
   const shouldCopyLib = hasLib && copy;
