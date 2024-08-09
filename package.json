@@ -1,6 +1,6 @@
 {
   "name": "mkscr",
-  "version": "0.3.1",
+  "version": "0.3.3",
   "description": "A CLI tool that generates a batch file to open AutoCAD and automatically load a specified DLL",
   "type": "module",
   "main": "./dist/index.cjs",
