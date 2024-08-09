@@ -18,8 +18,7 @@
   },
   "scripts": {
     "start": "bun src/index.ts",
-    "build": "tsup src/index.ts",
-    "prepublish": "bun run build"
+    "build": "tsup src/index.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",
