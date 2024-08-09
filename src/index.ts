@@ -24,17 +24,20 @@ const main = defineCommand({
       type: "string",
       alias: "l",
       description: "The DLL file to load",
+      required: false,
     },
     drawing: {
       type: "string",
       alias: "d",
       description: "Drawing file that will be loaded on startup",
+      required: false,
     },
     copy: {
       type: "boolean",
       alias: "c",
       description:
         "Copies everything in DLL's folder before starting AutoCAD and loads the copied DLL",
+      required: false,
     },
     name: {
       type: "positional",
@@ -49,7 +52,7 @@ const main = defineCommand({
 
 type CreateScriptArgs = {
   name: string;
-  lib: string;
+  lib?: string;
   drawing?: string;
   copy?: boolean;
 };
@@ -58,23 +61,26 @@ function createScript({ name, lib, drawing, copy = false }: CreateScriptArgs) {
   const desktop = path.join(os.homedir(), "Desktop");
   const scriptsDir = path.join(desktop, name);
 
-  const drawingPath = drawing ? path.resolve(drawing) : undefined;
-  const libPath = path.resolve(lib);
-  const libDir = path.dirname(libPath);
-  const libName = path.basename(libPath);
-  const libDest = path.join(scriptsDir, "lib");
-  const newLibPath = path.join(libDest, libName);
-  const loadLibPath = copy ? newLibPath : libPath;
+  const hasLib = lib !== undefined;
+  const shouldCopyLib = hasLib && copy;
 
-  makeDirIfNotExists(copy ? libDest : scriptsDir);
+  const drawingPath = drawing ? path.resolve(drawing) : undefined;
+  const libPath = hasLib ? path.resolve(lib!) : undefined;
+  const libDir = hasLib ? path.dirname(libPath!) : undefined;
+  const libName = hasLib ? path.basename(libPath!) : undefined;
+  const libDest = path.join(scriptsDir, "lib");
+  const newLibPath = hasLib ? path.join(libDest, libName!) : undefined;
+  const loadLibPath = shouldCopyLib ? newLibPath : libPath;
+
+  makeDirIfNotExists(shouldCopyLib ? libDest : scriptsDir);
 
   const scriptFile = path.join(scriptsDir, `startup.scr`);
-  const scriptContent = `netload ${loadLibPath}\n`;
+  const scriptContent = hasLib ? `netload ${loadLibPath}\n` : "";
   fs.writeFileSync(scriptFile, scriptContent);
 
   const batchFile = path.join(scriptsDir, `open-acad.bat`);
   let batchContent = "";
-  if (copy) {
+  if (shouldCopyLib) {
     batchContent += copyCommand(`${libDir}\\*`, `${libDest}\\`) + "\n";
   }
   batchContent += startAutoCADCommand({
